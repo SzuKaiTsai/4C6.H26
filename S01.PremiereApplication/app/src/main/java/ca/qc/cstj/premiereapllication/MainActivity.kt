@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ca.qc.cstj.premiereapllication.ui.screens.home.GameScreen
 import ca.qc.cstj.premiereapllication.ui.theme.PremiereApllicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -41,52 +42,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-@Composable
-fun GameScreen( ) {
-
-    var numberToTry by remember { mutableIntStateOf(50) }
-    val numberToGuess by remember { mutableIntStateOf((0..100).random())}
-    var message by remember { mutableStateOf("") }
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.LightGray)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text(text = numberToTry.toString(), fontSize = 18.sp)
-            Column(
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                Button(onClick = {if( numberToTry < 100 ) numberToTry++ }) {
-                    Text(text = "+", fontSize = 20.sp)
-                }
-                Button(onClick = {if ( numberToTry > 0 ) numberToTry--}) {
-                    Text(text = "-", fontSize = 20.sp)
-                }
-            }
-
-        }
-        Button(modifier = Modifier
-            .fillMaxWidth(0.5f),
-            onClick = {
-                message = if (numberToTry == numberToGuess) {
-                    "good job"
-                } else if(numberToTry<numberToGuess){
-                    "too low"
-                } else {
-                    "too high"
-                }
-
-            }
-        ) {
-            Text(text = stringResource(R.string.try_msg))
-        }
-        Text(text = message, fontSize = 24.sp)
-    }
-}
