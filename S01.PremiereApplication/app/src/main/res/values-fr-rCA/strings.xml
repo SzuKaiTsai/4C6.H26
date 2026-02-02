@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Premiere Apllication</string>
+    <string name="something">quelque chose</string>
+    <string name="try_msg">Essayez</string>
+</resources>

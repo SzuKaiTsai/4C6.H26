@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Premiere Apllication</string>
+    <string name="something">something</string>
+    <string name="try_msg">Try</string>
 </resources>

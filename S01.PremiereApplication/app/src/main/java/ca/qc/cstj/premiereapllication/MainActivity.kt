@@ -4,13 +4,29 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import ca.qc.cstj.premiereapllication.ui.theme.PremiereApllicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,29 +35,58 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PremiereApllicationTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    GameScreen()
                 }
             }
         }
     }
-}
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun GameScreen( ) {
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PremiereApllicationTheme {
-        Greeting("Android")
+    var numberToTry by remember { mutableIntStateOf(50) }
+    val numberToGuess by remember { mutableIntStateOf((0..100).random())}
+    var message by remember { mutableStateOf("") }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.LightGray)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(text = numberToTry.toString(), fontSize = 18.sp)
+            Column(
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                Button(onClick = {if( numberToTry < 100 ) numberToTry++ }) {
+                    Text(text = "+", fontSize = 20.sp)
+                }
+                Button(onClick = {if ( numberToTry > 0 ) numberToTry--}) {
+                    Text(text = "-", fontSize = 20.sp)
+                }
+            }
+
+        }
+        Button(modifier = Modifier
+            .fillMaxWidth(0.5f),
+            onClick = {
+                message = if (numberToTry == numberToGuess) {
+                    "good job"
+                } else if(numberToTry<numberToGuess){
+                    "too low"
+                } else {
+                    "too high"
+                }
+
+            }
+        ) {
+            Text(text = stringResource(R.string.try_msg))
+        }
+        Text(text = message, fontSize = 24.sp)
     }
 }
