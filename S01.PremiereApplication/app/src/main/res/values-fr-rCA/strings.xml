@@ -3,4 +3,8 @@
     <string name="app_name">Premiere Apllication</string>
     <string name="something">quelque chose</string>
     <string name="try_msg">Essayez</string>
+    <string name="too_high">Trop Haut</string>
+    <string name="too_low">Trop bas</string>
+    <string name="you_win">Vous avez gagnez</string>
+    <string name="new_game">Nouvelle Partie</string>
 </resources>

@@ -2,4 +2,8 @@
     <string name="app_name">Premiere Apllication</string>
     <string name="something">something</string>
     <string name="try_msg">Try</string>
+    <string name="too_high">Too high</string>
+    <string name="too_low">Too low</string>
+    <string name="you_win">You win</string>
+    <string name="new_game">New Game</string>
 </resources>
