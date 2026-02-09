@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
 
     implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.compose.ui.text.google.fonts)
 
 
     testImplementation(libs.junit)

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Clean Architecture</string>
-    <string name="format_minutes">%1$d minutes</string>
+    <plurals name="format_minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
 </resources>
