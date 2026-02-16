@@ -5,5 +5,13 @@ import ca.qc.cstj.cleanarchitecture.models.MeditationSession
 
 data class MeditationUiState(
     val currentMeditationSession: MeditationSession = MockData.meditationSessions.first(),
-    val featuresMeditationSession: List<MeditationSession> = MockData.meditationSessions
+    val featuresMeditationSession: List<MeditationSession> = MockData.meditationSessions,
+    val searchText:String= "",
+    val tags:List<String> = MockData.meditationTags,
+    val tagFilter: MeditationFilter = MeditationFilter.All
     )
+
+sealed interface  MeditationFilter {
+    data class ByTag(val tag: String): MeditationFilter
+    object All : MeditationFilter
+}

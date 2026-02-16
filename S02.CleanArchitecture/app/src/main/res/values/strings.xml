@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">Clean Architecture</string>
+    <string name="with">With %s</string>
+    <string name="features">Features</string>
+    <string name="search">Search</string>
+    <string name="all">All</string>
+    <string name="login">login</string>
+    <string name="kiwiflow" translatable="false">KiwiFlow</string>
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+    <string name="toggle_password_visibility">Toggle Password Visibility</string>
     <plurals name="format_minutes">
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>

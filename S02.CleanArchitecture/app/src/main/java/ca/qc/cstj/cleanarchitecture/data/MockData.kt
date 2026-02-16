@@ -231,5 +231,8 @@ object MockData {
             isPremium = false
         )
     )
+
+    val meditationTags = meditationSessions.flatMap { it.tags }.distinct()
+
 }
 
