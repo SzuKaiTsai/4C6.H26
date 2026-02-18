@@ -1,11 +1,13 @@
 package ca.qc.cstj.cleanarchitecture.ui.screens.title
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -17,27 +19,38 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ca.qc.cstj.cleanarchitecture.R
+import ca.qc.cstj.cleanarchitecture.core.ObserveAsEvents
+import ca.qc.cstj.cleanarchitecture.core.stringResourceWithContext
 
 @Composable
 fun TitleScreen(
     viewModel: TitleViewModel = viewModel(),
-    toMeditationScreen:()-> Unit
+    toMeditationScreen:(String)-> Unit
 ){
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+
+    ObserveAsEvents(viewModel.events) {
+        when(it){
+            TitleUiEvent.OnLoginError -> Toast.makeText(context, context.stringResourceWithContext(R.string.login_error),Toast.LENGTH_LONG).show()
+            TitleUiEvent.OnLoginSuccess -> toMeditationScreen(uiState.name)
+        }
+    }
 
     TitleContent(
         uiState = uiState,
-        toMeditationScreen = toMeditationScreen,
         onAction = {viewModel.onAction(it)}
     )
 }
@@ -45,8 +58,8 @@ fun TitleScreen(
 @Composable
 fun TitleContent(
     uiState: TitleUiState,
-    toMeditationScreen:()-> Unit = {},
     onAction: (TitleAction)->Unit = {}
+
 ){
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -68,7 +81,8 @@ fun TitleContent(
             },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text
-            )
+            ),
+            isError = uiState.isError
         )
         OutlinedTextField(
             value = uiState.password,
@@ -77,9 +91,13 @@ fun TitleContent(
                 Text(text= stringResource(R.string.password))
             },
             trailingIcon = {
-                IconButton(onClick = {}
+                IconButton(onClick = {
+                    onAction(TitleAction.OnTogglePasswordVisibility)
+                }
                 ) {
-                    Icon(imageVector = Icons.Filled.VisibilityOff,
+                    val icon = if(uiState.isPasswordVisible)
+                        Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+                    Icon(imageVector = icon,
                         stringResource(R.string.toggle_password_visibility)
                     )
                 }
@@ -87,12 +105,14 @@ fun TitleContent(
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.NumberPassword
             ),
-            visualTransformation = PasswordVisualTransformation() // VisualTransformation.None
+            visualTransformation = if(uiState.isPasswordVisible)
+                 VisualTransformation.None else PasswordVisualTransformation(),
+            isError = uiState.isError
         )
 
         Button(
             onClick = {
-                toMeditationScreen()
+                onAction(TitleAction.OnLoginClicked)
             }
         ) {
             Text(text = stringResource(R.string.login), style = MaterialTheme.typography.bodyMedium)

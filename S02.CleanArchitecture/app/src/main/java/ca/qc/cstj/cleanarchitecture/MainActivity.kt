@@ -41,13 +41,13 @@ class MainActivity : ComponentActivity() {
                         backStack = backstack,
                         entryProvider = { key ->
                             when(key){
-                            Route.MeditationRoute -> NavEntry(key){
-                                MeditationScreen()
+                            is Route.MeditationRoute -> NavEntry(key){
+                                MeditationScreen(key)
                             }
                             Route.TitleRoute -> NavEntry(key){
                                 TitleScreen(
                                     toMeditationScreen = {
-                                        backstack.add(Route.MeditationRoute)
+                                        backstack.add(Route.MeditationRoute(it))
                                     }
                                 )
                             }

@@ -8,7 +8,8 @@ data class MeditationUiState(
     val featuresMeditationSession: List<MeditationSession> = MockData.meditationSessions,
     val searchText:String= "",
     val tags:List<String> = MockData.meditationTags,
-    val tagFilter: MeditationFilter = MeditationFilter.All
+    val tagFilter: MeditationFilter = MeditationFilter.All,
+    val name: String= ""
     )
 
 sealed interface  MeditationFilter {

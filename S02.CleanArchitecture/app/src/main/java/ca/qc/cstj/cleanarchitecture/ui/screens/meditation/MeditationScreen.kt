@@ -37,6 +37,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,6 +56,7 @@ import ca.qc.cstj.cleanarchitecture.R
 import ca.qc.cstj.cleanarchitecture.core.colorPaths
 import ca.qc.cstj.cleanarchitecture.data.MockData
 import ca.qc.cstj.cleanarchitecture.models.MeditationSession
+import ca.qc.cstj.cleanarchitecture.ui.navigation.Route
 import ca.qc.cstj.cleanarchitecture.ui.theme.Green3
 import ca.qc.cstj.cleanarchitecture.ui.theme.Pink3
 import ca.qc.cstj.cleanarchitecture.ui.theme.currentMeditationCardTextStyle
@@ -62,13 +64,22 @@ import ca.qc.cstj.cleanarchitecture.ui.theme.featureCardTextColor
 import ca.qc.cstj.cleanarchitecture.ui.theme.featureCardTextStyle
 
 @Composable
-fun MeditationScreen(viewModel: MeditationViewModel = viewModel()) {
+fun MeditationScreen(
+    route: Route.MeditationRoute,
+    viewModel: MeditationViewModel = viewModel(){
+        MeditationViewModel(route.name)
+}) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(route.name) {
+        viewModel.onAction(MeditationAction.OnNameChange(route.name))
+    }
 
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
+        WelcomeMessage(uiState.name)
         SearchBar(
             searchText = uiState.searchText,
             onSearch = { viewModel.onAction(MeditationAction.OnSearch(it)) }
@@ -89,6 +100,13 @@ fun MeditationScreen(viewModel: MeditationViewModel = viewModel()) {
                         )}
         )
     }
+}
+
+//
+@Composable
+fun WelcomeMessage(nom:String){
+    Text(text = stringResource(R.string.good_morning,nom))
+    Text(text= stringResource(R.string.we_wish_you_a_good_day), style = MaterialTheme.typography.bodySmall)
 }
 
 // barre de recherche

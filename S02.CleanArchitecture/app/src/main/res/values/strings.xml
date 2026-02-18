@@ -13,4 +13,7 @@
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
     </plurals>
+     <string name="login_error">Sorry, we can\'t connect you with these credentials</string>
+    <string name="good_morning">Good Morning, %s</string>
+    <string name="we_wish_you_a_good_day">We wish you a good day!</string>
 </resources>

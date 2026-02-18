@@ -8,9 +8,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class MeditationViewModel: ViewModel() {
+class MeditationViewModel(name: String): ViewModel() {
     private val _uiState = MutableStateFlow(MeditationUiState())
     val uiState = _uiState.asStateFlow()
+
+    init {
+        _uiState.update {
+            it.copy(name = name)
+        }
+    }
 
     private fun startMeditation(meditationSession: MeditationSession) {
         _uiState.update {
@@ -41,12 +47,16 @@ class MeditationViewModel: ViewModel() {
         }
     }
 
+    private fun updateName(name: String) {
+       _uiState.update { it.copy(name = name) }
+    }
 
     fun onAction(action: MeditationAction){
         when(action){
             is MeditationAction.OnStartMeditationClicked -> startMeditation(action.meditationSession)
             is MeditationAction.OnSearch -> search(action.searchText)
             is MeditationAction.OnTagClicked -> changeTag(action.tagFilter)
+            is MeditationAction.OnNameChange -> updateName(action.name)
         }
     }
 
