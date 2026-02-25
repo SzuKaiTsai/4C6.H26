@@ -1,8 +1,11 @@
 package ca.qc.cstj.inkify.ui.screens.notes.list
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -20,6 +23,14 @@ fun ListNoteScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     //Scaffold
+    Scaffold(
+        modifier = Modifier.fillMaxSize()
+    ) { innerPaddings->
+        ListNoteContent(
+            modifier = Modifier.padding(innerPaddings),
+            uiState = uiState
+            )
+    }
 
 }
 
@@ -34,7 +45,7 @@ private fun ListNoteContent(
         modifier = modifier.padding(horizontal = 8.dp)
     ) {
         items(uiState.notes) { note ->
-
+            Text(text = note.title)
         }
     }
 }

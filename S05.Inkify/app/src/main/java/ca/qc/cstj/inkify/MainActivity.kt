@@ -21,6 +21,7 @@ import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.ui.NavDisplay
 import ca.qc.cstj.inkify.ui.navigation.Route
 import ca.qc.cstj.inkify.ui.screens.notes.add.AddNoteScreen
+import ca.qc.cstj.inkify.ui.screens.notes.list.ListNoteScreen
 import ca.qc.cstj.inkify.ui.theme.InkifyTheme
 
 class MainActivity : ComponentActivity() {
@@ -31,7 +32,7 @@ class MainActivity : ComponentActivity() {
 
             InkifyTheme(dynamicColor = false) {
 
-                val backStack = remember { mutableStateListOf<Route>(Route.AddNoteRoute) }
+                val backStack = remember { mutableStateListOf<Route>(Route.ListNoteRoute) }
 
                 NavDisplay(
                     modifier = Modifier.fillMaxSize(),
@@ -62,6 +63,13 @@ class MainActivity : ComponentActivity() {
                             Route.AddNoteRoute -> NavEntry(route) {
                                 AddNoteScreen(
                                     onNavigateBack = { backStack.removeLastOrNull() },
+                                    toSettingsScreen = {}
+                                )
+                            }
+
+                            Route.ListNoteRoute -> NavEntry(route) {
+                                ListNoteScreen(
+                                    toAddNoteScreen = {},
                                     toSettingsScreen = {}
                                 )
                             }

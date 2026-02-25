@@ -16,4 +16,5 @@
     <string name="settings_saved">Settings saved</string>
     <string name="error_while_saving_settings">Error while saving settings</string>
     <string name="error_while_saving">Error while saving</string>
+    <string name="save">Save</string>
 </resources>

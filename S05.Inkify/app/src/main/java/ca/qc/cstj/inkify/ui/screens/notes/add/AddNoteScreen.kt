@@ -14,14 +14,21 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.sharp.CheckCircle
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -47,10 +54,21 @@ fun AddNoteScreen(
 
 
     //Scaffold
-    Scaffold() { innerPaddings ->
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { viewModel.onAction(AddNoteAction.OnSaveClicked)}
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Save, contentDescription = stringResource(R.string.save)
+                )
+            }
+        }
+    ) { innerPaddings ->
         AddNoteContent(
             modifier = Modifier.padding(innerPaddings),
-            uiState = uiState
+            uiState = uiState,
+            onAction = {viewModel.onAction(it)}
         )
     }
 
@@ -73,9 +91,9 @@ private fun AddNoteContent(
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = "TITLE",
+            value = uiState.newNote.title,
             onValueChange = {
-                //TODO:
+                onAction(AddNoteAction.OnUpdateTitle(it))
             },
             label = {
                 Text(text = stringResource(R.string.title))
@@ -96,9 +114,18 @@ private fun AddNoteContent(
                         .clip(CircleShape)
                         .background(it.toColor)
                         .clickable {
-                            //TODO:
+                            onAction(AddNoteAction.OnUpdateColor(it.toColor))
                         }) {
-                    //TODO: Icon si c'est la couleur selectionnée
+                    if(uiState.newNote.color == it.toColor){
+                        Icon(
+                            imageVector = Icons.Sharp.CheckCircle,
+                            contentDescription = Icons.Sharp.CheckCircle.toString(),
+                            tint = Color.Black,
+                            modifier = Modifier.align(
+                                alignment = Alignment.Center
+                            )
+                        )
+                    }
                 }
             }
         }
@@ -107,9 +134,9 @@ private fun AddNoteContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(),
-            value = "CONTENT",
+            value = uiState.newNote.content,
             onValueChange = {
-                //TODO:
+                onAction(AddNoteAction.OnUpdateContent(it))
             },
             isError = false, //TODO
             singleLine = false,
