@@ -22,6 +22,7 @@ import androidx.navigation3.ui.NavDisplay
 import ca.qc.cstj.inkify.ui.navigation.Route
 import ca.qc.cstj.inkify.ui.screens.notes.add.AddNoteScreen
 import ca.qc.cstj.inkify.ui.screens.notes.list.ListNoteScreen
+import ca.qc.cstj.inkify.ui.screens.settings.SettingsScreen
 import ca.qc.cstj.inkify.ui.theme.InkifyTheme
 
 class MainActivity : ComponentActivity() {
@@ -63,14 +64,20 @@ class MainActivity : ComponentActivity() {
                             Route.AddNoteRoute -> NavEntry(route) {
                                 AddNoteScreen(
                                     onNavigateBack = { backStack.removeLastOrNull() },
-                                    toSettingsScreen = {}
+                                    toSettingsScreen = { backStack.add(Route.SettingsRoute)}
                                 )
                             }
 
                             Route.ListNoteRoute -> NavEntry(route) {
                                 ListNoteScreen(
-                                    toAddNoteScreen = {},
-                                    toSettingsScreen = {}
+                                    toAddNoteScreen = { backStack.add(Route.AddNoteRoute) },
+                                    toSettingsScreen = { backStack.add(Route.SettingsRoute)}
+                                )
+                            }
+
+                            Route.SettingsRoute -> NavEntry(route){
+                                SettingsScreen(
+                                    onNavigateBack = { backStack.removeLastOrNull()}
                                 )
                             }
                         }

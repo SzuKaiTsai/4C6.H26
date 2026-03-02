@@ -3,4 +3,5 @@ package ca.qc.cstj.inkify.ui.navigation
 sealed interface Route {
     data object AddNoteRoute: Route
     data object ListNoteRoute: Route
+    data object SettingsRoute: Route
 }

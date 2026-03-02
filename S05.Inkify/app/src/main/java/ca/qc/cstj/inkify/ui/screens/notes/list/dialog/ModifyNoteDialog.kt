@@ -6,17 +6,21 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.sharp.CheckCircle
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,6 +30,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import ca.qc.cstj.inkify.core.Constants
@@ -51,27 +57,27 @@ fun ModifyNoteDialog(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-//                OutlinedTextField(
-//                    value = currentNote.title,
-//                    onValueChange = {
-//                        currentNote = currentNote.copy(title = it)
-//                    },
-//                    isError = !currentNote.isValid(),
-//                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
-//
-//                )
-//                OutlinedTextField(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .height(250.dp),
-//                    value = currentNote.content,
-//                    onValueChange = {
-//                        currentNote = currentNote.copy(content = it)
-//                    },
-//                    isError = !currentNote.isValid(),
-//                    singleLine = false,
-//                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Default)
-//                )
+                OutlinedTextField(
+                    value = currentNote.title,
+                    onValueChange = {
+                        currentNote = currentNote.copy(title = it)
+                    },
+                    isError = !currentNote.isValid(),
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
+
+                )
+                OutlinedTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(250.dp),
+                    value = currentNote.content,
+                    onValueChange = {
+                        currentNote = currentNote.copy(content = it)
+                    },
+                    isError = !currentNote.isValid(),
+                    singleLine = false,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Default)
+                )
 
                 LazyRow(
                     modifier = Modifier.fillMaxWidth(),
@@ -83,18 +89,18 @@ fun ModifyNoteDialog(
                             .clip(CircleShape)
                             .background(it.toColor)
                             .clickable {
-                                //currentNote = currentNote.copy(color = it.toColor)
+                                currentNote = currentNote.copy(color = it.toColor)
                             }) {
-//                            if (currentNote.color == it.toColor) {
-//                                Icon(
-//                                    imageVector = Icons.Sharp.CheckCircle,
-//                                    contentDescription = Icons.Sharp.CheckCircle.toString(),
-//                                    tint = Color.Black,
-//                                    modifier = Modifier.align(
-//                                        Alignment.Center
-//                                    )
-//                                )
-//                            }
+                            if (currentNote.color == it.toColor) {
+                                Icon(
+                                    imageVector = Icons.Sharp.CheckCircle,
+                                    contentDescription = Icons.Sharp.CheckCircle.toString(),
+                                    tint = Color.Black,
+                                    modifier = Modifier.align(
+                                        Alignment.Center
+                                    )
+                                )
+                            }
                         }
                     }
                 }

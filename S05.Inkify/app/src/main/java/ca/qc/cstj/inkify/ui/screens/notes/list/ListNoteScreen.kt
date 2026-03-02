@@ -4,6 +4,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import ca.qc.cstj.inkify.ui.components.InkifyTopBar
+import ca.qc.cstj.inkify.ui.components.NoteCard
 
 @Composable
 fun ListNoteScreen(
@@ -24,11 +30,26 @@ fun ListNoteScreen(
 
     //Scaffold
     Scaffold(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            InkifyTopBar(
+                toSettingsScreen = { toSettingsScreen() }
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    toAddNoteScreen()
+                }
+            ) {
+                Icon(imageVector = Icons.Filled.Add, contentDescription = Icons.Filled.Add.name)
+            }
+        }
     ) { innerPaddings->
         ListNoteContent(
             modifier = Modifier.padding(innerPaddings),
-            uiState = uiState
+            uiState = uiState,
+            onAction = { viewModel.onAction(it) }
             )
     }
 
@@ -45,7 +66,9 @@ private fun ListNoteContent(
         modifier = modifier.padding(horizontal = 8.dp)
     ) {
         items(uiState.notes) { note ->
-            Text(text = note.title)
+            NoteCard(note = note,
+                onSaveClick = { onAction(ListNoteAction.OnSaveClicked(note)) },
+                onDeleteClick = { onAction(ListNoteAction.OnDeleteClicked(note)) })
         }
     }
 }

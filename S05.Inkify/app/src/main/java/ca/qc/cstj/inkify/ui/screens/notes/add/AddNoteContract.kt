@@ -1,6 +1,7 @@
 package ca.qc.cstj.inkify.ui.screens.notes.add
 
 import androidx.compose.ui.graphics.Color
+import ca.qc.cstj.inkify.models.Note
 
 sealed interface AddNoteAction {
     data class OnUpdateColor(val color: Color): AddNoteAction
@@ -11,5 +12,6 @@ sealed interface AddNoteAction {
 }
 
 sealed interface AddNoteEvent {
-
+    data class NoteSaved(val note: Note) : AddNoteEvent
+    data object NoteError: AddNoteEvent
 }

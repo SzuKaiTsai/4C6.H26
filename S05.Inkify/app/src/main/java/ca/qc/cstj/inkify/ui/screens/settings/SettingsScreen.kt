@@ -35,6 +35,7 @@ import ca.qc.cstj.inkify.core.Constants
 import ca.qc.cstj.inkify.core.ObserveAsEvents
 import ca.qc.cstj.inkify.core.stringResourceWithContext
 import ca.qc.cstj.inkify.core.toColor
+import ca.qc.cstj.inkify.ui.components.InkifyTopBar
 
 @Composable
 fun SettingsScreen(
@@ -57,7 +58,11 @@ fun SettingsScreen(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { }
+        topBar = {
+            InkifyTopBar(
+                onNavigateBack = { onNavigateBack() }
+            )
+        },
     ) { innerPadding ->
         SettingsContent(
             modifier = Modifier.padding(innerPadding),

@@ -38,12 +38,13 @@ class AddNoteViewModel(application: Application) : AndroidViewModel(application)
         viewModelScope.launch {
             try {
                 noteRepository.create(note)
+                _events.send(AddNoteEvent.NoteSaved(_uiState.value.newNote))
                 _uiState.update {
                     it.copy(newNote = Note())
                 }
             }
             catch (ex: Exception){
-
+                _events.send(AddNoteEvent.NoteError)
             }
         }
 

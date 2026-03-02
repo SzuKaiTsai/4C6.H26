@@ -1,5 +1,6 @@
 package ca.qc.cstj.inkify.ui.screens.notes.add
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -37,7 +38,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ca.qc.cstj.inkify.R
 import ca.qc.cstj.inkify.core.Constants
+import ca.qc.cstj.inkify.core.ObserveAsEvents
+import ca.qc.cstj.inkify.core.stringResourceWithContext
 import ca.qc.cstj.inkify.core.toColor
+import ca.qc.cstj.inkify.ui.components.InkifyTopBar
 
 
 @Composable
@@ -51,10 +55,30 @@ fun AddNoteScreen(
     val context = LocalContext.current
 
     //Events
-
+    ObserveAsEvents(viewModel.events) { event->
+        when(event){
+            AddNoteEvent.NoteError -> {
+                Toast.makeText(context, R.string.error_while_saving, Toast.LENGTH_LONG).show()
+            }
+            is AddNoteEvent.NoteSaved -> {
+                Toast.makeText(
+                    context,
+                    context.stringResourceWithContext(R.string.note_saved, event.note.title),
+                    Toast.LENGTH_LONG)
+                    .show()
+                onNavigateBack()
+            }
+        }
+    }
 
     //Scaffold
     Scaffold(
+        topBar = {
+            InkifyTopBar(
+                onNavigateBack = { onNavigateBack()},
+                toSettingsScreen = { toSettingsScreen() }
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { viewModel.onAction(AddNoteAction.OnSaveClicked)}
