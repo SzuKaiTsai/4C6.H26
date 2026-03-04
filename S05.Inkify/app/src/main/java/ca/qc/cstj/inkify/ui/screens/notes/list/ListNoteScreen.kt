@@ -67,8 +67,8 @@ private fun ListNoteContent(
     ) {
         items(uiState.notes) { note ->
             NoteCard(note = note,
-                onSaveClick = { onAction(ListNoteAction.OnSaveClicked(note)) },
-                onDeleteClick = { onAction(ListNoteAction.OnDeleteClicked(note)) })
+                onSaveClick = { onAction(ListNoteAction.OnSaveClicked(it)) },
+                onDeleteClick = { onAction(ListNoteAction.OnDeleteClicked(it)) })
         }
     }
 }

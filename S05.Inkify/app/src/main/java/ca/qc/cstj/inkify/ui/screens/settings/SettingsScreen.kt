@@ -9,15 +9,22 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.sharp.CheckCircle
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,8 +32,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -85,22 +94,22 @@ private fun SettingsContent(
         modifier = modifier
             .fillMaxHeight()
     ) {
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = uiState.settings.name,
-//            onValueChange = { newName ->
-//                onAction(SettingsAction.OnSaveName(newName))
-//            },
-//            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-//            label = { Text(text = stringResource(R.string.name)) },
-//            leadingIcon = {
-//                Icon(
-//                    imageVector = Icons.Filled.AccountCircle,
-//                    contentDescription = stringResource(R.string.name),
-//                    tint = MaterialTheme.colorScheme.outline
-//                )
-//            }
-//        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = uiState.settings.name,
+            onValueChange = { newName ->
+                onAction(SettingsAction.OnSaveName(newName))
+            },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            label = { Text(text = stringResource(R.string.name)) },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.AccountCircle,
+                    contentDescription = stringResource(R.string.name),
+                    tint = MaterialTheme.colorScheme.outline
+                )
+            }
+        )
 
         LazyVerticalGrid(
             modifier = Modifier,
@@ -118,16 +127,16 @@ private fun SettingsContent(
                     .clickable {
                         onAction(SettingsAction.OnColorChange(it))
                     }) {
-//                    if (uiState.settings.noteDefaultColor == it) {
-//                        Icon(
-//                            imageVector = Icons.Sharp.CheckCircle,
-//                            contentDescription = Icons.Sharp.CheckCircle.toString(),
-//                            tint = Color.Black,
-//                            modifier = Modifier.align(
-//                                Alignment.Center
-//                            )
-//                        )
-//                    }
+                    if (uiState.settings.noteDefaultColor == it) {
+                        Icon(
+                            imageVector = Icons.Sharp.CheckCircle,
+                            contentDescription = Icons.Sharp.CheckCircle.toString(),
+                            tint = Color.Black,
+                            modifier = Modifier.align(
+                                Alignment.Center
+                            )
+                        )
+                    }
                 }
             }
         }

@@ -80,13 +80,18 @@ fun AddNoteScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = { viewModel.onAction(AddNoteAction.OnSaveClicked)}
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Save, contentDescription = stringResource(R.string.save)
-                )
+
+            if(uiState.newNote.isValid()){
+                FloatingActionButton(
+                    onClick = { viewModel.onAction(AddNoteAction.OnSaveClicked)}
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Save, contentDescription = stringResource(R.string.save)
+                    )
+                }
             }
+
+
         }
     ) { innerPaddings ->
         AddNoteContent(
@@ -122,7 +127,7 @@ private fun AddNoteContent(
             label = {
                 Text(text = stringResource(R.string.title))
             },
-            isError = false, //TODO
+            isError = !uiState.newNote.isValid(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
         )
         LazyRow(
@@ -162,7 +167,7 @@ private fun AddNoteContent(
             onValueChange = {
                 onAction(AddNoteAction.OnUpdateContent(it))
             },
-            isError = false, //TODO
+            isError = !uiState.newNote.isValid(),
             singleLine = false,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = {})

@@ -5,11 +5,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import ca.qc.cstj.inkify.InkifyApplication
+import ca.qc.cstj.inkify.core.toColor
 import ca.qc.cstj.inkify.data.repositories.NoteRepository
+import ca.qc.cstj.inkify.data.repositories.SettingRepository
 import ca.qc.cstj.inkify.models.Note
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -22,11 +26,18 @@ class AddNoteViewModel(application: Application) : AndroidViewModel(application)
     private val _events = Channel<AddNoteEvent>(capacity = Channel.BUFFERED)
     val events = _events.receiveAsFlow()
 
-    //TODO: Repositories
+    // Repositories
     private val app = application.applicationContext as InkifyApplication
     private val noteRepository = NoteRepository(app.database.noteDao())
+    private val settingRepository = SettingRepository(app.dataStore)
+
+    private lateinit var _defaultNoteColor : String
+
     init {
-        //TODO:
+        settingRepository.preferences.onEach { preferences ->
+            _defaultNoteColor = preferences.noteDefaultColor
+            updateColor(_defaultNoteColor.toColor)
+        }.launchIn(viewModelScope)
     }
 
     private fun save() {
@@ -42,6 +53,7 @@ class AddNoteViewModel(application: Application) : AndroidViewModel(application)
                 _uiState.update {
                     it.copy(newNote = Note())
                 }
+                updateColor(_defaultNoteColor.toColor)
             }
             catch (ex: Exception){
                 _events.send(AddNoteEvent.NoteError)
