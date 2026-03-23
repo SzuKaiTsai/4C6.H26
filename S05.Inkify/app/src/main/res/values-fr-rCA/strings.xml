@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Inkify</string>
+    <string name="new_note">Nouvelle note</string>
+    <string name="title">Titre</string>
+    <string name="login">Connexion</string>
+    <string name="note_saved">%s note sauvegardée</string>
+    <string name="delete_confirm_msg">Êtes-vous certain de vouloir supprimer cette note</string>
+    <string name="delete_it">Supprimer</string>
+    <string name="cancel">Annuler</string>
+    <string name="settings">Paramètres</string>
+    <string name="welcome_back">Bonjour %s</string>
+    <string name="reset">Réinitialiser</string>
+    <string name="error_add_note">Une note doit avoir un titre ou un contenu</string>
+    <string name="this_action_cannot_be_undone">Cette action est irréversible</string>
+    <string name="name">Nom</string>
+    <string name="settings_saved">Paramètres sauvegardés</string>
+    <string name="error_while_saving_settings">Erreur lors de la sauvegarde des paramètres</string>
+    <string name="error_while_saving">"Erreur lors de la sauvegarde "</string>
+    <string name="save">Save</string>
+</resources>
