@@ -46,12 +46,14 @@ class MainActivity : ComponentActivity() {
                         entryProvider = entryProvider {
                             entry<Route.PlanetList> {
                                 PlanetsListScreen(
-                                    toPlanetDetailScreen = {}
+                                    toPlanetDetailScreen = {
+                                        backStack.add(Route.PlanetDetail(it.href))
+                                    }
                                 )
                             }
                             entry<Route.PlanetDetail> {
                                 PlanetDetailsScreen(
-                                    href = ""
+                                    href = it.href
                                 )
                             }
 

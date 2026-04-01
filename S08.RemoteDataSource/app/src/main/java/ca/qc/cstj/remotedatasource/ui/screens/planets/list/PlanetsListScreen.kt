@@ -29,7 +29,8 @@ import ca.qc.cstj.remotedatasource.ui.theme.RemoteDataSourceTheme
 
 @Composable
 fun PlanetsListScreen(
-    viewModel: PlanetsListViewModel = viewModel(), toPlanetDetailScreen: (Planet) -> Unit
+    viewModel: PlanetsListViewModel = viewModel(),
+    toPlanetDetailScreen: (Planet) -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
     PlanetsListContent(
@@ -85,7 +86,7 @@ fun PlanetsListContent(
                         PlanetCard(
                             planet = it,
                             unit = uiState.temperatureUnit,
-                            onClick = {}
+                            onClick = { it -> toPlanetDetailScreen(it) }
                         )
 
                     }

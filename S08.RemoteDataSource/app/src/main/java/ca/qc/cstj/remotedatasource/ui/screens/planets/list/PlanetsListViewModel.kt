@@ -6,6 +6,7 @@ import ca.qc.cstj.remotedatasource.R
 import ca.qc.cstj.remotedatasource.core.AsyncResult
 import ca.qc.cstj.remotedatasource.core.Constants
 import ca.qc.cstj.remotedatasource.data.repositories.PlanetRepository
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,6 +23,7 @@ class PlanetsListViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(PlanetsListUiState())
     val uiState = _uiState.asStateFlow()
 
+    private var refreshPlateJob: Job? = null
 
     init {
         refreshPlanet()
@@ -42,7 +44,10 @@ class PlanetsListViewModel : ViewModel() {
     }
 
     private fun refreshPlanet() {
-        viewModelScope.launch {
+
+        refreshPlateJob?.cancel()
+
+        refreshPlateJob = viewModelScope.launch {
             while (isActive) {
                 val isAlreadyLoaded = _uiState.value.planetResult is AsyncResult.Success
 

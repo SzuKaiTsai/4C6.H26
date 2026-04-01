@@ -35,7 +35,13 @@ class PlanetRepository {
     }
 
     fun retrieveOne(href: String) : Flow<Planet> {
-        return flow {}
+        return flow {
+            val planet = planetDataSource.retrieveOne(href)
+            emit(planet)
+        }.catch {
+            Log.e("PlanetRepository", it.message.toString())
+            throw it
+        }.flowOn(Dispatchers.IO)
     }
 
 
