@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BottomNavigation</string>
+    <string name="home">Accueil</string>
+    <string name="one">Un</string>
+    <string name="two">Deux</string>
+    <string name="three">Trois</string>
+    <string name="details">Détails</string>
+    <string name="features_topbar">Features %s</string>
+    <string name="features">Features</string>
+    <string name="add_notification">Ajouter notification</string>
+    <string name="snackbar">Snackbar</string>
+</resources>
