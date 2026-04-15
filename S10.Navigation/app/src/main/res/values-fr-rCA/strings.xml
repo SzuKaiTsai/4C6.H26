@@ -10,4 +10,5 @@
     <string name="features">Features</string>
     <string name="add_notification">Ajouter notification</string>
     <string name="snackbar">Snackbar</string>
+    <string name="bonjour_etc">Bonjour etc</string>
 </resources>

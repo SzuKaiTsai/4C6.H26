@@ -35,7 +35,9 @@ class MainViewModel : ViewModel() {
     }
 
     private fun updateTopBarOptions(topBarOptions: TopBarOptions) {
-       //TODO:
+       _uiState.update {
+           it.copy(topBarOptions = topBarOptions)
+       }
     }
 
 
