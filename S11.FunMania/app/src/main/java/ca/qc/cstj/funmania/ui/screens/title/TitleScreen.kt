@@ -3,8 +3,10 @@ package ca.qc.cstj.funmania.ui.screens.title
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,6 +30,8 @@ fun TitleScreen(
         }) {
             Text(text = stringResource(R.string.open))
         }
-        //TODO:
+        LinearProgressIndicator(
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }

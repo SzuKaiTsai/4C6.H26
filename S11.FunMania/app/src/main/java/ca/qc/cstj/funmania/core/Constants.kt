@@ -13,7 +13,7 @@ object Constants {
 
     object NetworkEndPoint {
         private const val BASE_URL = "https://api.openweathermap.org"
-        const val API_KEY = "d11bb1960130ffcbf0c404756f9c3dcb"
+        const val API_KEY = "41d2f97877b7c86e4f7a1e59eadddaef"
         const val UNITS = "metric"
         const val FORECAST_END_POINT = "$BASE_URL/data/2.5/forecast"
         const val CURRENT_WEATHER_END_POINT = "$BASE_URL/data/2.5/weather"

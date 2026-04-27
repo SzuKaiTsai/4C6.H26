@@ -35,7 +35,7 @@ class WeatherViewModel: ViewModel() {
         refreshJob = viewModelScope.launch {
             while(isActive) {
                 _uiState.update {
-                it.copy(currentWeatherResult = AsyncAction.Loading)
+                    it.copy(currentWeatherResult = AsyncAction.Loading)
                 }
                 weatherInfoRepository.retrieveWithCityName(uiState.value.search).catch {
                     _uiState.update {
@@ -48,7 +48,6 @@ class WeatherViewModel: ViewModel() {
                 }
                 delay(Constants.RefreshDelay.METEO_REFRESH)
             }
-
         }
     }
 

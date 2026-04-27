@@ -5,7 +5,7 @@ import ca.qc.cstj.funmania.data.datasources.dto.WeatherInfoDTO
 
 data class WeatherInfo(private val weatherInfoDTO: WeatherInfoDTO) {
     val city = weatherInfoDTO.name ?: ""
-    val country = weatherInfoDTO.sys?.country ?:""
+    val country = weatherInfoDTO.sys?.country ?: ""
     val temperature = weatherInfoDTO.main?.temp ?: 0.0
     val feelsLike = weatherInfoDTO.main?.feelsLike ?: 0.0
     val weather = weatherInfoDTO.weather?.get(0)?.main ?: ""

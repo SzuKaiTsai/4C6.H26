@@ -6,6 +6,7 @@ plugins {
 
 buildscript {
     dependencies {
+        // À rajouter dans futurs projets
         //https://developers.google.com/codelabs/maps-platform/maps-platform-101-compose#0
         classpath(libs.secrets.gradle.plugin)
     }

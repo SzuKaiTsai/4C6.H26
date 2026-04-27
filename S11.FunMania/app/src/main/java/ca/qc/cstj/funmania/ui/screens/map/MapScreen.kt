@@ -15,13 +15,13 @@ import com.google.maps.android.compose.rememberUpdatedMarkerState
 @Composable
 fun MapScreen(latLng: LatLng = LatLng(0.0, 0.0)) {
 
-    val permission = listOf(
+    val permissions = listOf(
         android.Manifest.permission.ACCESS_FINE_LOCATION,
         android.Manifest.permission.ACCESS_COARSE_LOCATION
     )
 
-    PermissionRequester(permission) {
-        val cameraPositionState = rememberCameraPositionState {
+    PermissionRequester(permissions) {
+        val cameraPositionState = rememberCameraPositionState{
             position = CameraPosition.fromLatLngZoom(latLng, 7f)
         }
 
@@ -30,14 +30,11 @@ fun MapScreen(latLng: LatLng = LatLng(0.0, 0.0)) {
             cameraPositionState = cameraPositionState,
             properties = MapProperties(isTrafficEnabled = true, isMyLocationEnabled = true)
         ) {
-
             Marker(
-                state = rememberUpdatedMarkerState(latLng),
-                title = "UwU",
+                state = rememberUpdatedMarkerState(position = latLng),
+                title = "Émy",
                 snippet = "${latLng.latitude} ; ${latLng.longitude}"
             )
-
         }
     }
-
 }

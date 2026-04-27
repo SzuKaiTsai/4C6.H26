@@ -3,7 +3,7 @@ package ca.qc.cstj.funmania.ui.screens.barcode
 import androidx.annotation.StringRes
 
 sealed interface BarcodeAction {
-    //TODO: OnScanResult
+    data class OnScan(val qrContent: String?) : BarcodeAction
     data object Refresh : BarcodeAction
 }
 

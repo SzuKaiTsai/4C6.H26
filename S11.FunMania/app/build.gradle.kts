@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.google.maps)
+    alias(libs.plugins.google.maps) // À rajouter dans futur projet
     alias(libs.plugins.ksp)
 }
 
@@ -71,6 +71,7 @@ dependencies {
 
     implementation(libs.coil.compose)
 
+    // Dépendences pour google maps (À rajouter pour futurs projets)
     //https://developers.google.com/codelabs/maps-platform/maps-platform-101-compose#0
     implementation(libs.maps.compose)
     // Google Maps Compose utility library
@@ -101,6 +102,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
 
+// À rajouter dans futurs projets
 secrets {
     // Optionally specify a different file name containing your secrets.
     // The plugin defaults to "local.properties"

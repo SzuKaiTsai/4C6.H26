@@ -1,6 +1,7 @@
 package ca.qc.cstj.funmania.ui.screens.orientation
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.media.MediaPlayer
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,15 +22,25 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import ca.qc.cstj.funmania.R
+import ca.qc.cstj.funmania.core.ui.YoutubePlayer
+import com.google.android.gms.cast.CastRemoteDisplay
 
 @Composable
 fun OrientationScreen() {
-    //TODO:
+    val orientation = LocalConfiguration.current.orientation
+
+    if(orientation == Configuration.ORIENTATION_PORTRAIT) {
+        PortraitMode()
+    } else {
+        LandscapeMode()
+    }
 }
 
 @Composable
@@ -39,7 +50,7 @@ private fun LandscapeMode() {
         horizontalArrangement = Arrangement.Center
     ) {
         Column(modifier = Modifier.fillMaxSize(0.5f)) {
-            //TODO: Youtube
+            YoutubePlayer(youtubeVideoId = "5anLPw0Efmo", lifecycleOwner = LocalLifecycleOwner.current)
             SoundSection()
         }
         IntentsSection()
@@ -53,7 +64,7 @@ private fun PortraitMode() {
         modifier = Modifier.fillMaxSize().padding(4.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        //TODO: Youtube
+        YoutubePlayer(youtubeVideoId = "5anLPw0Efmo", lifecycleOwner = LocalLifecycleOwner.current)
         SoundSection()
         IntentsSection()
     }
@@ -94,7 +105,8 @@ fun IntentsSection() {
     LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         item {
             Button(onClick = {
-                //TODO:
+                val dialIntent = Intent(Intent.ACTION_DIAL, "tel:450-436-1580".toUri())
+                context.startActivity(dialIntent)
             }) {
                 Text(text = stringResource(R.string.phone))
             }
@@ -102,7 +114,9 @@ fun IntentsSection() {
 
         item {
             Button(onClick = {
-                //TODO:
+                val smsIntent = Intent(Intent.ACTION_VIEW, "smsto:450-436-1580".toUri())
+                smsIntent.putExtra("sms_body", "BonJour d'Android")
+                context.startActivity(smsIntent)
             }) {
                 Text(text = stringResource(R.string.sms))
             }
@@ -110,7 +124,9 @@ fun IntentsSection() {
 
         item {
             Button(onClick = {
-                //TODO:
+                val googleMapsIntent = Intent(Intent.ACTION_VIEW, "geo:0,0?q=restaurants".toUri())
+                googleMapsIntent.setPackage("com.google.android.apps.maps")
+                context.startActivity(googleMapsIntent)
             }) {
                 Text(text = stringResource(R.string.maps))
             }
@@ -118,7 +134,9 @@ fun IntentsSection() {
 
         item {
             Button(onClick = {
-                //TODO:
+                val calendarIntent = Intent(Intent.ACTION_MAIN)
+                calendarIntent.addCategory(Intent.CATEGORY_APP_CALENDAR)
+                context.startActivity(calendarIntent)
             }) {
                 Text(text = stringResource(R.string.calendar))
             }

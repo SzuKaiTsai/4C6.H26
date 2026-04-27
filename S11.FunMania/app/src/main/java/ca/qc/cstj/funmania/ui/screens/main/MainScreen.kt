@@ -102,7 +102,7 @@ fun MainScreen(
             entryProvider = entryProvider {
                 entry<Weather> {
                     WeatherScreen(
-                        toMapScreen = { toMapScreen(it) }
+                        toMapScreen = { latLng -> toMapScreen(latLng) }
                     )
                 }
                 entry<Barcode> {

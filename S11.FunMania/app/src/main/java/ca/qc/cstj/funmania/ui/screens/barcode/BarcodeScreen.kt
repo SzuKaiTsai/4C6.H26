@@ -1,10 +1,12 @@
 package ca.qc.cstj.funmania.ui.screens.barcode
 
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,9 +27,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import ca.qc.cstj.funmania.R
 import ca.qc.cstj.funmania.core.AsyncResult
 import ca.qc.cstj.funmania.core.extensions.ObserveAsEvents
+import ca.qc.cstj.funmania.core.extensions.OnResume
 import ca.qc.cstj.funmania.core.ui.components.ErrorMessage
 import ca.qc.cstj.funmania.core.ui.components.LoadingAnimation
 import ca.qc.cstj.funmania.models.CheckIn
+import io.github.g00fy2.quickie.QRResult
+import io.github.g00fy2.quickie.ScanCustomCode
+import io.github.g00fy2.quickie.config.BarcodeFormat
+import io.github.g00fy2.quickie.config.ScannerConfig
 
 @Composable
 fun BarcodeScreen(
@@ -39,6 +46,9 @@ fun BarcodeScreen(
     val context = LocalContext.current
 
     //TODO: On Resume
+    OnResume {
+        viewModel.onAction(BarcodeAction.Refresh)
+    }
 
     ObserveAsEvents(viewModel.events) { event ->
         when(event) {
@@ -46,7 +56,21 @@ fun BarcodeScreen(
         }
     }
 
-    //TODO: ScanLauncher
+    // Gestion du résultat du scan du code-barre
+    val scanQrCodeLauncher = rememberLauncherForActivityResult(ScanCustomCode()) { qrResult ->
+        when(qrResult) {
+            is QRResult.QRError -> {
+                // TODO: Message à l'utilisateur (Toast + SnackBar) => Events
+                // TOAST: Plus facile
+            }
+            QRResult.QRMissingPermission -> {}
+            is QRResult.QRSuccess -> {
+                // On fait quoi avec le contenu du code-barre
+                viewModel.onAction(BarcodeAction.OnScan(qrResult.content.rawValue))
+            }
+            QRResult.QRUserCanceled -> {}
+        }
+    }
 
     Column(
         modifier = Modifier.padding(8.dp),
@@ -56,7 +80,8 @@ fun BarcodeScreen(
             is AsyncResult.Error ->  ErrorMessage(checkInsResult.messageResId)
             AsyncResult.Loading -> LoadingAnimation()
             is AsyncResult.Success -> {
-                LazyColumn(contentPadding = PaddingValues(4.dp)) {
+                LazyColumn(contentPadding = PaddingValues(4.dp),
+                    modifier = Modifier.fillMaxHeight(0.95f)) {
                     items(checkInsResult.data) {
                         CheckInCard(checkIn = it)
                     }
@@ -65,7 +90,14 @@ fun BarcodeScreen(
         }
 
         Button(onClick = {
-            //TODO: Démarrer la bibliothèque de scan
+            scanQrCodeLauncher.launch(
+                ScannerConfig.build {
+                    setBarcodeFormats(listOf(BarcodeFormat.FORMAT_ALL_FORMATS))
+                    setOverlayDrawableRes(R.drawable.clear_sky_day)
+                    setOverlayStringRes(R.string.scan_the_id)
+                    setShowCloseButton(true)
+                }
+            )
         }) {
             Text(text = stringResource(R.string.check_in))
         }

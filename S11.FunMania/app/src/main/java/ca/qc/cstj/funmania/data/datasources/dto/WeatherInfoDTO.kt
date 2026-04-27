@@ -1,8 +1,6 @@
 package ca.qc.cstj.funmania.data.datasources.dto
 import kotlinx.serialization.Serializable
-
 import kotlinx.serialization.SerialName
-
 
 @Serializable
 data class WeatherInfoDTO(
@@ -99,3 +97,5 @@ data class Wind(
     @SerialName("speed")
     val speed: Double? = 0.0
 )
+
+
